@@ -1,0 +1,37 @@
+{
+    "organizations" : [
+        {
+            "id": "grubhub",
+            "name": "GrubHub",
+            "employees" : [{
+                "id": "clark",
+                "name": "Mr. Clark"
+            }],
+            "projects" : [
+                {
+                    "id": "care",
+                    "members" : ["rene"]
+                },{
+                    "id": "wda",
+                    "members": []
+                }
+            ],
+            "coordinators": ["astrid"]
+        },
+        {
+            "id": "midoplay",
+            "name": "MidoPlay",
+            "employees": [
+                {
+                    "id": "bo",
+                    "name": "Mr. Bo"
+                } 
+            ],
+            "projects": [{
+                "id": "coin",
+                "members" : ["mpineda"]
+            }],        
+            "coordinators": []
+        }
+    ]
+}
