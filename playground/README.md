@@ -70,17 +70,78 @@ that organization must have a property for a list of employees and another one f
 * Person must be coordinator of an organization: Each organization should have a list of coordinators 
 (only the ids because the full data is contained in employees)
 
-To use TDD for `dm_policies.rego` we create `dm_policies_test.rego`. This and all test files requires to be in the same package of the file its going to test, e.g. `examples` or import it. The structure of each test must be:
+To use TDD for `dm_policies.rego` we create `dm_policies_test.rego`. This and all test files requires to be in the same package of the file its going to test, e.g. `dm` or import it. The structure of each test must be:
 
+```
 `name_of_the_test` {
-    {not?} <function_evaluated_on_params>
+    {not?} <function>(<testparams>)
 }
+```
+
+or
+
+```
+`name_of_the_test` { 
+    {not?} allow with input as <input_json>
+}
+```
+
+## Sample API usage
+As we are going to use bpm-projects-api as sample projects we will try to modelate on the `bpm.projects` package the allow rules
+to grant or pass a request.
+
+* GET / : Allowed to anyone to see
+* GET /projects: Allowed just for the employees of the company (IOET), so we must create an `employees` section in the base documents and a corresponding function to evaluate if some user is an employee of the domain. Only employees of IOET are going to see this entries
 
 ## Run the tests
 
 To run all the tests in a package like `example` just go to that folder and run the tests in verbose mode:
 
-```
-cd example
+```bash
+cd bpm/dm
 opa test . -v
+```
+It use to fail in the vscode plugin because it doesnt run it in the right folder. So its better for you to do it in the console instead.
+
+If you want to run code coverage do it with
+
+```bash
+opa test --coverage . -v
+```
+As the coverage is an option of the tests it combines the previous action as well, only that the verbose information wont be given; if you want
+it you must run first the tests with `-v` and then the coverage.
+
+If the response of the coverage was successful you will get a json giving you details about all the covered and not covered lines.
+When a line is not covered it indicates one of two things:
+
+* If the line refers to the head of a rule, the body of the rule was never true.
+* If the line refers to an expression in a rule, the expression was never evaluated.
+
+## Run it as a bundle
+By the time the opa control server be ready to use you may be able to run your OPA configuration:
+```bash
+cd playground
+opa run -c config.yml
+```
+
+As the server probably wont be running you will get a response like
+
+```txt
+ERRO[0000] Bundle download failed, server replied with not found.  name=http/dm plugin=bundle
+```
+So the best to do a simulation of how to work a bundle would be like better create a bundle with the following command:
+```bash
+cd playground
+tar --exclude='*test.rego' -zcvf bpm.tar.gz bpm
+```
+You can check it has the wanted structure:
+
+```bash
+tar tzf bpm.tar.gz
+```
+
+Now you can run the bundle:
+
+```bash
+opa run bpm.tar.gz
 ```

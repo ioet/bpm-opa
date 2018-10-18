@@ -12,8 +12,7 @@
                     "id": "care",
                     "members" : ["rene"]
                 },{
-                    "id": "wda",
-                    "members": []
+                    "id": "wda"
                 }
             ],
             "coordinators": ["astrid"]
@@ -32,6 +31,19 @@
                 "members" : ["mpineda"]
             }],        
             "coordinators": []
+        }
+    ],
+    "employees": [
+        {
+            "id": "astrid",
+            "name": "Astrid Schneider"
+        },
+        {
+            "id": "rene",
+            "name": "Rene Enriquez"
+        },{
+            "id": "mpineda",
+            "name": "Mr. Pineda"
         }
     ]
 }

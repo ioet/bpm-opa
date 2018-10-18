@@ -1,0 +1,29 @@
+services:
+  - name: ioet-opa-control-server
+    url: https://example.com/control-plane-api/v1
+    credentials:
+      bearer:
+        token: "bGFza2RqZmxha3NkamZsa2Fqc2Rsa2ZqYWtsc2RqZmtramRmYWxkc2tm"
+
+bundle:
+  name: http/projects       # Id of the bundle to download.
+  service: ioet-opa-control-server  # Which remote server to contact to do so
+  polling:
+    min_delay_seconds: 60
+    max_delay_seconds: 120
+ 
+labels: #Just example metadata
+  app: bpm-projects-api
+  tech: python
+  environment: production
+
+# To report all decisions evaluated by this opa daemon
+# decision_logs:
+#  service: ioet-opa-control-server
+#  reporting:
+#    min_delay_seconds: 300
+#    max_delay_seconds: 600
+
+# To report the status of an opa daemon: Is it Alive (Running) or Dead?
+# status:
+#  service: ioet-opa-control-server
