@@ -5,11 +5,19 @@ import data.organizations
 default allow = false
 
 organization = data.bpm.dm.organization
+valid_exts = [".js", ".css", ".png", ".json"]
 
 # GET / : Swagger UI page
 allow {
     input.method = "GET"
-    input.path = [""]
+    input.path = []
+}
+
+# GET resources
+allow {
+    input.method = "GET"
+    file_idx = count(input.path) - 1
+    endswith(input.path[file_idx], valid_exts[_])
 }
 
 # GET /login : Login page

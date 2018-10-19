@@ -1,7 +1,22 @@
 package bpm.projects 
 
 test_get_swagger_page_allowed {
-    allow with input as { "method": "GET", "path": [""] }
+    allow with input as { "method": "GET", "path": [] }
+}
+
+test_get_resource_files_allowed {
+    allow with input as { "method": "GET", "path": ["path", "resource.js"] }
+    allow with input as { "method": "GET", "path": ["path", "resource.css"] }
+    allow with input as { "method": "GET", "path": ["path", "resource.png"] }
+    allow with input as { "method": "GET", "path": ["another", "path", "resource.json"] } 
+    allow with input as { "method": "GET", "path": ["another", "very", "long", "path", "resource.css"] }
+}
+
+test_get_resource_files_denied {
+    not allow with input as { "method": "GET", "path": ["resource.txt"] }
+    not allow with input as { "method": "GET", "path": ["path", "resource.exe"] }
+    not allow with input as { "method": "GET", "path": ["path", "long", "resource.sh"] }
+    not allow with input as { "method": "GET", "path": ["path", "long", "longer", "resource.dmg"] }
 }
 
 test_get_login_allowed {
