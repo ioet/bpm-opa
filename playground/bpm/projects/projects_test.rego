@@ -4,6 +4,11 @@ test_get_swagger_page_allowed {
     allow with input as { "method": "GET", "path": [""] }
 }
 
+test_get_login_allowed {
+    allow with input as { "method": "GET", "path": ["login"] }
+    allow with input as { "method": "GET", "path": ["login"], "user": "invaliduser" }
+}
+
 test_post_swagger_page_denied {
     not allow with input as { "method": "POST", "path": [""] }
 }

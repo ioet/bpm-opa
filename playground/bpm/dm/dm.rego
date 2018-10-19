@@ -5,7 +5,7 @@ import data.employees
 
 default allow = false
 
-allow = {
+allow {
     can_read(input.user, input.project)
 }
 

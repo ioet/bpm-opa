@@ -1,6 +1,5 @@
 package bpm.dm
 
-
 test_allow_allowed {
   allow with input as {"user":"clark", "project":"care"}
   allow with input as {"user":"astrid", "project":"care"}

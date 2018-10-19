@@ -12,6 +12,12 @@ allow {
     input.path = [""]
 }
 
+# GET /login : Login page
+allow {
+    input.method = "GET"
+    input.path = ["login"]
+}
+
 # GET /projects : List all projects
 # IOET employees only
 allow { 
