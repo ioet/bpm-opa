@@ -5,7 +5,7 @@ import data.organizations
 default allow = false
 
 organization = data.bpm.dm.organization
-valid_exts = [".js", ".css", ".png", ".json"]
+valid_exts = [".js", ".css", ".png", ".json", ".ico"]
 
 # GET / : Swagger UI page
 allow {
@@ -24,6 +24,12 @@ allow {
 allow {
     input.method = "GET"
     input.path = ["login"]
+}
+
+# GET /logout : Login page
+allow {
+    input.method = "GET"
+    input.path = ["logout"]
 }
 
 # GET /projects : List all projects
