@@ -192,3 +192,29 @@ It will return `false` because `rene` should not be able to access the project `
 To see more cases check `projects_test.rego`. Its also highly recommended you create policies 
 for your own application and install an OPA compatible library for you to enforce security with it.
 Take `bpm.projects` as a reference. Demo your results to others members of your team. to get some feedback.
+
+## Changing the policies data remotely
+Most of the times the policies that you will deploy wont change in a long time, but this is not the
+case of the opa data which reflects the facts (state of the domain model). Thats why its nice you
+know how to change such data by using simple REST calls. Supposing our OPA server is running in `http://localhost:8181` lets see our organization data in
+
+curl -X GET \
+  http://localhost:8181/v1/data/organizations \
+  -H 'Content-Type: application/json' \
+  -H 'Postman-Token: b4164b00-d4b7-4a17-a70e-8660a0613c81' \
+  -H 'cache-control: no-cache'
+
+Notice that if you `GET` request to `http://localhost:8181/v1/data` you wont get not only the json data but also the data loaded by the policies contained in the `bpm` package (same as the parent folder):
+
+```json
+{
+    "result": {
+        "bpm": {
+            "dm": { ... },
+            "projects": { ... }
+        },
+        "employees": [ ... ],
+        "organizations": [ ... ]
+    }
+}
+```
