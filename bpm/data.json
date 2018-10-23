@@ -1,0 +1,54 @@
+{
+    "organizations" : [
+        {
+            "id": "grubhub",
+            "name": "GrubHub",
+            "employees" : [{
+                "id": "clark",
+                "name": "Mr. Clark"
+            }],
+            "projects" : [
+                {
+                    "id": "care",
+                    "members" : ["rene"]
+                },{
+                    "id": "wda"
+                }
+            ],
+            "coordinators": ["astrid"]
+        },
+        {
+            "id": "midoplay",
+            "name": "MidoPlay",
+            "employees": [
+                {
+                    "id": "bo",
+                    "name": "Mr. Bo"
+                } 
+            ],
+            "projects": [{
+                "id": "coin",
+                "members" : ["mpineda"]
+            }],        
+            "coordinators": []
+        }
+    ],
+    "employees": [
+        {
+            "id": "astrid",
+            "name": "Astrid Schneider"
+        },
+        {
+            "id": "rene",
+            "name": "Rene Enriquez"
+        },{
+            "id": "mpineda",
+            "name": "Mr. Pineda"
+        }
+    ],
+    "settings": {
+        "assets": {
+            "valid_extensions": [".js", ".css", ".png", ".json", ".ico"]
+        }
+    }
+}

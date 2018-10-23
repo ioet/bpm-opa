@@ -7,3 +7,6 @@ input.json
 
 # Bundle files
 *.tar.gz
+
+#TLS certificates
+*.key

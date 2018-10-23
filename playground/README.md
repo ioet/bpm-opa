@@ -198,11 +198,12 @@ Most of the times the policies that you will deploy wont change in a long time, 
 case of the opa data which reflects the facts (state of the domain model). Thats why its nice you
 know how to change such data by using simple REST calls. Supposing our OPA server is running in `http://localhost:8181` lets see our organization data in
 
+```bash
 curl -X GET \
   http://localhost:8181/v1/data/organizations \
   -H 'Content-Type: application/json' \
-  -H 'Postman-Token: b4164b00-d4b7-4a17-a70e-8660a0613c81' \
   -H 'cache-control: no-cache'
+```
 
 Notice that if you `GET` request to `http://localhost:8181/v1/data` you wont get not only the json data but also the data loaded by the policies contained in the `bpm` package (same as the parent folder):
 
@@ -217,4 +218,55 @@ Notice that if you `GET` request to `http://localhost:8181/v1/data` you wont get
         "organizations": [ ... ]
     }
 }
+```
+
+If you want to update, lets say the first organization you can do it with 
+
+```bash
+  curl -X PATCH \
+  http://localhost:8181/v1/data/organizations \
+  -H 'Content-Type: application/json' \
+  -H 'cache-control: no-cache' \
+  -d '[
+    {
+     "op": "replace",
+     "path": "0",
+     "value":
+    {
+        "coordinators": [...],
+        "employees": [...],
+        "id": "<orgid>",
+        "name": "<Organization Name>",
+        "projects": [...]
+    }
+   }
+  ]'
+```
+
+
+## Improve security access
+
+### Enable TLS (HTTPS connections)
+
+Its recommended that if your are going to enforce a policy through the Internet you use a secure connection. To do so you will need to generate some TLS credentials:
+
+```bash
+openssl genrsa -out private.key 2048
+openssl req -new -x509 -sha256 -key private.key -out public.crt -days 1
+```
+
+then you can start opa ready to receive https connections
+
+```bash
+opa run --server --log-level debug \
+    --tls-cert-file public.crt \
+    --tls-private-key-file private.key bpm
+```
+
+
+### Authorization
+Although most of the time, and as its recommended, the opa server will run in the same server than the application (localhost), some other times when you want to update policies and data you might want to connect remotely to the running opa server so you might want to expose its the port `8181` (OPA default port) to the Internet. If you dont secure some how to access to the exposed API your whole application would be compromised so its recommended that you run your app using at least an authentication with a bearer token. You can centralize this token with a configuration server (e.g. Spring Config or something alike) or provide it to your building docker image during its generation as an ENV variable, pass it as an argument to your Dockerfile, etc.
+
+```bash
+opa run --s --authentication=token bpm
 ```
